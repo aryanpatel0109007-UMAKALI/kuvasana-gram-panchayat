@@ -114,6 +114,39 @@ st.markdown(
           radial-gradient(ellipse at 75% 80%, rgba(255,194,77,.6) 0 8%, transparent 33%),
           linear-gradient(180deg,#f8f2df 0%,#fff9e9 62%,#f6dba0 100%);
     }
+    .saffron-wave, .white-wave, .green-wave {
+        position:absolute; top:0; right:-1%; width:67%; height:86%;
+        pointer-events:none; z-index:0;
+    }
+    .saffron-wave {
+        background:#ff9933;
+        clip-path:polygon(8% 0,100% 0,100% 22%,79% 35%,58% 31%,37% 43%,16% 36%,0 20%);
+        opacity:.98;
+    }
+    .white-wave {
+        top:15%; height:75%;
+        background:rgba(255,255,255,.96);
+        clip-path:polygon(0 10%,22% 20%,44% 28%,63% 23%,82% 29%,100% 12%,100% 44%,78% 55%,58% 49%,37% 61%,17% 49%,0 39%);
+    }
+    .green-wave {
+        top:29%; height:71%;
+        background:#138808;
+        clip-path:polygon(0 33%,20% 39%,40% 34%,60% 25%,80% 27%,100% 5%,100% 38%,80% 58%,59% 57%,39% 65%,18% 58%,0 54%);
+        opacity:.95;
+    }
+    .hero-content {z-index:1;}
+    .hero-emblem-box {z-index:1;}
+    .chakra-wrap {
+        display:flex;align-items:center;justify-content:center;
+        background:rgba(255,255,255,.92);border:6px solid #183b70;
+        border-radius:50%;color:#183b70;font-size:72px;font-weight:800;
+        line-height:1;width:115px;height:115px;padding-bottom:5px;
+    }
+    .hero-slogan-base {
+        color:#6f501c;background:rgba(255,255,255,.32);
+        border-radius:6px;padding:2px 10px;
+    }
+
     .hero-landscape {
         position:absolute; inset:auto 0 0 0; width:100%; height:43%; z-index:-1;
     }
@@ -273,37 +306,13 @@ with h_nav:
 with h_lang:
     st.markdown('<div style="text-align:center;font-size:15px;padding-top:10px">🇮🇳<br>ગુજરાતી</div>', unsafe_allow_html=True)
 
-# Hero banner with layered SVG landscape and three-col composition.
-hero_svg = """
-<svg class="hero-landscape" viewBox="0 0 1400 220" preserveAspectRatio="none" aria-hidden="true">
-  <defs>
-    <linearGradient id="hillA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c9c58"/><stop offset="1" stop-color="#315b38"/></linearGradient>
-    <linearGradient id="skySun" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9d47a"/><stop offset="1" stop-color="#fff3ce"/></linearGradient>
-  </defs>
-  <circle cx="1050" cy="70" r="38" fill="url(#skySun)" opacity=".92"/>
-  <path d="M0 115 Q120 62 235 105 T470 92 T720 118 T970 90 T1210 105 T1400 88 L1400 220 L0 220Z" fill="#b2c68f" opacity=".62"/>
-  <path d="M0 145 Q150 80 310 140 T620 125 T900 146 T1160 118 T1400 135 L1400 220 L0 220Z" fill="url(#hillA)" opacity=".65"/>
-  <path d="M0 170 Q190 120 360 166 T730 151 T1050 167 T1400 150 L1400 220 L0 220Z" fill="#315a37" opacity=".9"/>
-  <g fill="#f2e4bd" stroke="#b89b69" stroke-width="2" opacity=".95">
-    <path d="M50 172 l38 -29 38 29 v30 H50Z"/><path d="M40 173 L88 135 L137 173Z" fill="#c57c40"/>
-    <path d="M155 181 l28 -21 30 21 v24 H155Z"/><path d="M147 181 L183 151 L221 181Z" fill="#b76530"/>
-    <path d="M1180 174 l38 -29 39 29 v31 H1180Z"/><path d="M1172 175 L1218 136 L1259 175Z" fill="#bc743c"/>
-    <path d="M1290 181 l31 -23 30 23 v24 H1290Z"/><path d="M1282 181 L1321 151 L1357 181Z" fill="#b86d35"/>
-  </g>
-  <g fill="#275332" opacity=".9"><circle cx="24" cy="184" r="15"/><circle cx="143" cy="190" r="18"/><circle cx="265" cy="182" r="17"/><circle cx="1100" cy="190" r="18"/><circle cx="1264" cy="188" r="20"/><circle cx="1380" cy="182" r="18"/></g>
-  <g fill="#dce7c7" opacity=".8"><rect x="72" y="184" width="7" height="18"/><rect x="180" y="188" width="7" height="16"/><rect x="1210" y="183" width="7" height="19"/><rect x="1315" y="187" width="7" height="16"/></g>
-</svg>
-<svg class="hero-wave" viewBox="0 0 900 450" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M120 0 C260 75 350 100 495 45 S740 105 900 15 L900 95 C740 165 630 105 490 100 S270 155 120 70Z" fill="#ff9933"/>
-  <path d="M0 165 C180 130 300 220 475 195 S710 185 900 140 L900 230 C715 275 600 265 455 260 S170 205 0 250Z" fill="#138808" opacity=".94"/>
-  <path d="M190 85 C315 138 365 148 495 115 S740 165 900 105 L900 140 C720 200 620 160 488 164 S300 155 190 120Z" fill="#ffffff" opacity=".88"/>
-</svg>
-"""
-
+# Hero banner: pure HTML/CSS (no inline SVG here, to prevent Markdown showing HTML as code)
 st.markdown(
     f"""
     <section class="hero-banner">
-      {hero_svg}
+      <div class="saffron-wave"></div>
+      <div class="white-wave"></div>
+      <div class="green-wave"></div>
       <div class="hero-content">
         <div class="azadi-badge">
           <div class="number">75</div>
@@ -320,27 +329,8 @@ st.markdown(
         </div>
         <div class="hero-emblem-box">
           <img class="hero-emblem" src="{GOLD_EMBLEM_URL}" alt="અશોક સ્તંભનું રાષ્ટ્રીય ચિહ્ન">
-          <div class="chakra-wrap">
-            <svg viewBox="0 0 240 240" width="100%" height="100%" aria-label="અશોક ચક્ર">
-              <circle cx="120" cy="120" r="108" fill="#ffffff" fill-opacity=".8" stroke="#183b70" stroke-width="10"/>
-              <circle cx="120" cy="120" r="14" fill="#183b70"/>
-              <g stroke="#183b70" stroke-width="5" stroke-linecap="round">
-                <line x1="120" y1="26" x2="120" y2="214"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(15 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(30 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(45 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(60 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(75 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(90 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(105 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(120 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(135 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(150 120 120)"/>
-                <line x1="120" y1="26" x2="120" y2="214" transform="rotate(165 120 120)"/>
-              </g>
-              <circle cx="120" cy="120" r="87" fill="none" stroke="#183b70" stroke-width="3"/>
-            </svg>
-          </div>
+          <div class="chakra-wrap" aria-label="અશોક ચક્ર">☸</div>
+          <div class="hero-slogan-base">સત્યમેવ જયતે</div>
         </div>
       </div>
     </section>
