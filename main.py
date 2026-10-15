@@ -7,9 +7,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# This is a visual prototype. The emblem image is linked from Wikimedia Commons.
-EMBLEM_URL = "https://commons.wikimedia.org/wiki/Special:Redirect/file/Emblem_of_India.svg"
-GOLD_EMBLEM_URL = "https://commons.wikimedia.org/wiki/Special:Redirect/file/Emblem_of_India_(gold).svg"
+# Official emblem artwork hosted by Wikimedia Commons.
+EMBLEM_URL = "https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg"
 
 st.markdown(
     """
@@ -17,254 +16,165 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
 
     :root {
-        --deep-green: #073f2e;
-        --leaf-green: #17863b;
+        --green: #0d5138;
+        --green2: #16843b;
         --saffron: #f58220;
-        --navy: #173c79;
-        --soft-bg: #f7f7f1;
-        --ink: #18372b;
+        --navy: #173f7a;
+        --cream: #fff9ee;
+        --page: #f7f8f2;
+        --ink: #173a2c;
     }
 
     html, body, [class*="css"], .stApp {
         font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
     }
-    .stApp {
-        background: var(--soft-bg);
-        color: var(--ink);
-    }
-    header[data-testid="stHeader"] {
-        background: transparent;
-        height: 0.4rem;
-    }
-    #MainMenu, footer {visibility: hidden;}
+    .stApp { background: var(--page); color: var(--ink); }
+    header[data-testid="stHeader"] { background: transparent; }
+    #MainMenu, footer { visibility: hidden; }
     .block-container {
         max-width: 1540px;
-        padding-top: 0.5rem;
-        padding-bottom: 1rem;
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
+        padding: .45rem 1.1rem 1rem;
     }
 
-    /* Header */
-    .site-header {
-        min-height: 106px;
-        display: flex;
-        align-items: center;
-        gap: 17px;
-        padding: 12px 14px 15px;
-        background: rgba(255,255,255,.95);
-        border-bottom: 1px solid #e3e5d9;
-        border-radius: 0 0 13px 13px;
-        position: relative;
-        overflow: hidden;
+    /* Clean tricolour header */
+    .tricolour-line {
+        height: 7px;
+        border-radius: 4px;
+        background: linear-gradient(90deg,
+            #ff9933 0 33.333%, #ffffff 33.333% 66.666%, #138808 66.666% 100%);
+        border: 1px solid rgba(20, 50, 35, .08);
     }
-    .header-mark {
-        height: 78px;
-        width: 66px;
-        object-fit: contain;
-        flex: 0 0 66px;
-        filter: contrast(1.1);
-    }
-    .brand-copy { min-width: 275px; flex: 1; }
-    .brand-copy .guj-brand {
-        color: var(--deep-green);
-        font-weight: 800;
-        font-size: clamp(21px, 2vw, 31px);
-        line-height: 1.22;
-        margin: 0;
-    }
-    .brand-copy .eng-brand {font-weight: 750; font-size: 17px; margin-top: 1px;}
-    .brand-copy .tagline {font-size: 12px; color: #4b5b50; margin-top: 3px;}
-    .header-mini-tricolor {
-        position:absolute; top:0; left:0; width:100%; height:6px;
-        background:linear-gradient(90deg,#ff9933 0 33.333%,#fff 33.333% 66.666%,#138808 66.666% 100%);
-    }
+    .header-brand { padding: 8px 0 4px; }
+    .header-guj { font-size: clamp(20px, 2.05vw, 31px); line-height: 1.25; font-weight: 800; color: var(--green); }
+    .header-eng { font-size: 16px; font-weight: 750; margin-top: 2px; }
+    .header-tag { font-size: 12px; color: #56685d; margin-top: 2px; }
+    .emblem-small { width: auto; height: 75px; max-width: 100%; object-fit: contain; }
+    .language-mark { text-align: center; color: var(--green); font-size: 14px; padding-top: 7px; }
+
     .st-key-nav_home button, .st-key-nav_village button,
     .st-key-nav_development button, .st-key-nav_news button,
-    .st-key-nav_contact button, .st-key-nav_language button {
-        background:transparent !important;
-        color:#173d30 !important;
-        border:0 !important;
-        border-radius:0 !important;
-        min-height:42px !important;
-        padding:5px 4px !important;
-        font-weight:650 !important;
-        white-space:nowrap !important;
-        box-shadow:none !important;
-        font-size:13px !important;
+    .st-key-nav_contact button {
+        background: transparent !important; color: #234738 !important;
+        border: 0 !important; border-radius: 0 !important;
+        padding: 5px 3px !important; min-height: 40px !important;
+        white-space: nowrap !important; font-weight: 650 !important;
+        font-size: 13px !important; box-shadow: none !important;
     }
     .st-key-nav_home button:hover, .st-key-nav_village button:hover,
     .st-key-nav_development button:hover, .st-key-nav_news button:hover,
-    .st-key-nav_contact button:hover, .st-key-nav_language button:hover {
-        color:#e66f12 !important;
-        border-bottom:3px solid #f58220 !important;
+    .st-key-nav_contact button:hover {
+        color: #d96713 !important; border-bottom: 3px solid #ff9933 !important;
     }
 
-    /* Hero/banner: built in HTML/CSS/SVG rather than a screenshot */
+    /* Hero banner: independent grid zones avoid overlapping text and emblem */
     .hero-banner {
-        position:relative;
-        isolation:isolate;
-        overflow:hidden;
-        min-height:365px;
-        margin:0 0 14px;
-        border-radius:0 0 15px 15px;
-        border-bottom:4px solid #fff;
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        border-radius: 16px;
+        margin: 13px 0 17px;
+        border: 1px solid #eadfca;
+        border-bottom: 5px solid #138808;
         background:
-          radial-gradient(ellipse at 14% 83%, rgba(126,163,86,.45) 0 12%, transparent 37%),
-          radial-gradient(ellipse at 75% 80%, rgba(255,194,77,.6) 0 8%, transparent 33%),
-          linear-gradient(180deg,#f8f2df 0%,#fff9e9 62%,#f6dba0 100%);
+            radial-gradient(ellipse at 6% 95%, rgba(132, 171, 97, .24), transparent 33%),
+            radial-gradient(ellipse at 57% 100%, rgba(255, 192, 84, .28), transparent 35%),
+            linear-gradient(120deg, #fff9eb 0%, #fffdf8 52%, #fff3d6 100%);
     }
-    .saffron-wave, .white-wave, .green-wave {
-        position:absolute; top:0; right:-1%; width:67%; height:86%;
-        pointer-events:none; z-index:0;
+    .hero-banner:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        right: 0;
+        top: 0;
+        width: 28%;
+        height: 100%;
+        background: linear-gradient(180deg,
+            rgba(255,153,51,.93) 0 31%,
+            rgba(255,255,255,.94) 31% 63%,
+            rgba(19,136,8,.91) 63% 100%);
+        clip-path: polygon(18% 0,100% 0,100% 100%,0 100%,20% 73%,7% 48%,0 25%);
     }
-    .saffron-wave {
-        background:#ff9933;
-        clip-path:polygon(8% 0,100% 0,100% 22%,79% 35%,58% 31%,37% 43%,16% 36%,0 20%);
-        opacity:.98;
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 17% 55% 28%;
+        align-items: center;
+        gap: 8px;
+        min-height: 345px;
+        padding: 25px 22px 22px;
     }
-    .white-wave {
-        top:15%; height:75%;
-        background:rgba(255,255,255,.96);
-        clip-path:polygon(0 10%,22% 20%,44% 28%,63% 23%,82% 29%,100% 12%,100% 44%,78% 55%,58% 49%,37% 61%,17% 49%,0 39%);
-    }
-    .green-wave {
-        top:29%; height:71%;
-        background:#138808;
-        clip-path:polygon(0 33%,20% 39%,40% 34%,60% 25%,80% 27%,100% 5%,100% 38%,80% 58%,59% 57%,39% 65%,18% 58%,0 54%);
-        opacity:.95;
-    }
-    .hero-content {z-index:1;}
-    .hero-emblem-box {z-index:1;}
-    .chakra-wrap {
-        display:flex;align-items:center;justify-content:center;
-        background:rgba(255,255,255,.92);border:6px solid #183b70;
-        border-radius:50%;color:#183b70;font-size:72px;font-weight:800;
-        line-height:1;width:115px;height:115px;padding-bottom:5px;
-    }
-    .hero-slogan-base {
-        color:#6f501c;background:rgba(255,255,255,.32);
-        border-radius:6px;padding:2px 10px;
-    }
-
-    .hero-landscape {
-        position:absolute; inset:auto 0 0 0; width:100%; height:43%; z-index:-1;
-    }
-    .hero-wave {
-        position:absolute; top:0; right:-2%; width:67%; height:80%; z-index:-1;
-        opacity:.98;
-    }
-    .hero-content {
-        position:relative;
-        display:grid;
-        grid-template-columns: 22% 49% 29%;
-        align-items:center;
-        min-height:365px;
-        padding:25px 28px 15px;
-        gap:8px;
-    }
-    .azadi-badge {text-align:center; color:#805822; font-weight:800; padding:8px;}
-    .azadi-badge .number {font-family:Georgia,serif; font-weight:800; font-size:clamp(44px,5vw,75px); line-height:.95; color:#987344;}
-    .azadi-badge .mini-ribbon {font-size:28px; letter-spacing:2px; line-height:1.1;}
-    .azadi-badge .badge-copy {font-size:clamp(16px,1.5vw,23px); line-height:1.35; margin-top:8px;}
-    .hero-main {text-align:center; padding:5px 8px 0;}
-    .hero-eyebrow {font-size:15px; font-weight:800; color:#1d7d3a; letter-spacing:.4px;}
-    .hero-main h1 {font-size:clamp(30px,3.5vw,48px); line-height:1.2; color:#11462e; font-weight:800; margin:9px 0 8px;}
-    .hero-main h1 span {color:#e87517;}
-    .hero-main h2 {font-size:clamp(18px,2vw,27px); line-height:1.4; color:#174734; margin:0 0 17px; font-weight:750;}
-    .hero-green-line {color:#247c34; font-size:clamp(12px,1.15vw,17px); font-weight:800; line-height:1.7;}
-    .motto {margin-top:20px; font-size:clamp(20px,2vw,29px); color:#104431; font-weight:800;}
-    .vande {font-size:clamp(17px,1.5vw,22px); font-weight:800; margin-top:3px;}
-    .vande .orange {color:#ed7918;} .vande .green {color:#187d37;}
-    .hero-emblem-box {position:relative; display:flex; justify-content:center; align-items:center; min-height:290px;}
-    .hero-emblem {
-        width:min(76%,230px); max-height:330px; object-fit:contain;
-        filter: sepia(1) saturate(2.8) hue-rotate(350deg) contrast(1.06) drop-shadow(0 9px 6px rgba(64,44,16,.18));
-        opacity:.97; position:relative; z-index:2;
-    }
-    .chakra-wrap {position:absolute; right:-5px; top:6px; z-index:1; width:115px; height:115px; opacity:.98;}
-    .hero-slogan-base {font-size:15px;color:#f3cf79;font-weight:800;position:absolute;bottom:5px;left:0;right:0;text-align:center;}
+    .azadi-badge { text-align: center; padding: 4px 5px; color: #865c27; }
+    .azadi-number { font-family: Georgia, serif; font-size: clamp(48px, 5vw, 76px); line-height: .98; color: #967144; }
+    .azadi-ribbon { color: #dc8a20; letter-spacing: 3px; font-size: 25px; line-height: 1; }
+    .azadi-copy { font-size: clamp(15px, 1.4vw, 21px); font-weight: 800; line-height: 1.4; margin-top: 8px; }
+    .hero-main { text-align: center; padding: 4px 8px; min-width: 0; }
+    .hero-eyebrow { font-size: 14px; font-weight: 800; color: #268044; margin-bottom: 7px; }
+    .hero-title { color: #0d5138; font-size: clamp(28px, 3.1vw, 47px); line-height: 1.23; font-weight: 800; margin: 5px 0 9px; overflow-wrap: anywhere; }
+    .hero-title span { color: #e87517; }
+    .hero-subtitle { color: #214f3a; font-size: clamp(17px, 1.9vw, 26px); line-height: 1.45; font-weight: 750; margin: 0 0 12px; }
+    .hero-green-line { color: #247b36; font-size: clamp(12px, 1.15vw, 16px); line-height: 1.8; font-weight: 800; }
+    .hero-motto { color: #0d5138; font-size: clamp(20px, 1.9vw, 28px); font-weight: 800; margin-top: 12px; }
+    .hero-vande { font-size: clamp(17px, 1.5vw, 22px); font-weight: 800; margin-top: 3px; }
+    .hero-vande .orange { color: #e87517; }
+    .hero-vande .green { color: #13823b; }
+    .hero-right { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 5px; }
+    .hero-emblem { width: auto; height: 205px; max-width: 76%; object-fit: contain; filter: sepia(.55) saturate(1.35) hue-rotate(350deg) contrast(1.03); }
+    .chakra { width: 61px; height: 61px; border: 4px solid #173f7a; border-radius: 50%; color: #173f7a; background: rgba(255,255,255,.9); display: flex; align-items: center; justify-content: center; font-size: 37px; line-height: 1; }
+    .hero-emblem-caption { color: #77531d; font-size: 13px; font-weight: 800; text-align: center; }
 
     /* Portal cards */
-    .section-heading {
-        display:flex; align-items:center; justify-content:center; gap:13px;
-        text-align:center; color:#124831; font-weight:800;
-        font-size:clamp(21px,2vw,27px); margin:6px 0 15px;
-    }
-    .heading-rule {display:inline-block; width:62px; height:5px; border-top:2px solid #f58220; border-bottom:2px solid #138808;}
-    .portal-card {
-        height:190px; border:1px solid rgba(0,0,0,.035); border-radius:15px;
-        padding:14px 11px 9px; text-align:center; position:relative; overflow:hidden;
-        display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-    }
-    .portal-card::after {content:''; position:absolute; width:100px;height:100px;border-radius:50%;right:-20px;bottom:-25px;background:rgba(255,255,255,.40);}
-    .portal-card.public {background:linear-gradient(135deg,#f1fbef,#d8f1d6);}
-    .portal-card.citizen {background:linear-gradient(135deg,#fff6e9,#ffead4);}
-    .portal-card.admin {background:linear-gradient(135deg,#edf6ff,#dceeff);}
-    .portal-card.officer {background:linear-gradient(135deg,#f7efff,#e9def9);}
-    .portal-icon {
-        width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-        color:#fff;font-size:27px;margin:0 auto 7px;position:relative;z-index:1;
-        box-shadow:0 5px 15px rgba(0,0,0,.09);
-    }
-    .public .portal-icon {background:#07852f;}.citizen .portal-icon{background:#ff730b;}.admin .portal-icon{background:#0755ab;}.officer .portal-icon{background:#6425a1;}
-    .portal-card h3 {font-size:clamp(17px,1.45vw,22px);font-weight:800;margin:0 0 7px;position:relative;z-index:1;}
-    .public h3{color:#08752c;}.citizen h3{color:#dc6507;}.admin h3{color:#074d9d;}.officer h3{color:#5b2494;}
-    .portal-card p {font-size:13px;line-height:1.5;margin:0;position:relative;z-index:1;max-width:260px;}
-    .st-key-portal_public button,.st-key-portal_citizen button,.st-key-portal_admin button,.st-key-portal_officer button {
-        min-height:40px !important; width:100% !important; border-radius:9px !important;
-        border:0 !important; color:#fff !important; font-weight:700 !important; margin-top:-1px !important;
-    }
-    .st-key-portal_public button {background:#07852f !important;}
-    .st-key-portal_citizen button {background:#f06c0a !important;}
-    .st-key-portal_admin button {background:#0755ab !important;}
-    .st-key-portal_officer button {background:#6425a1 !important;}
-    .st-key-portal_public button:hover,.st-key-portal_citizen button:hover,.st-key-portal_admin button:hover,.st-key-portal_officer button:hover {filter:brightness(.92);}
+    .section-heading { display:flex; align-items:center; justify-content:center; gap:13px; text-align:center; color:#124831; font-weight:800; font-size:clamp(21px,2vw,28px); margin:8px 0 15px; }
+    .heading-rule { display:inline-block; width:60px; height:5px; border-top:2px solid #f58220; border-bottom:2px solid #138808; flex-shrink:0; }
+    .portal-card { min-height:184px; border:1px solid rgba(0,0,0,.04); border-radius:15px; padding:14px 10px 11px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
+    .portal-card.public { background:linear-gradient(135deg,#f2fbef,#d9f2d6); }
+    .portal-card.citizen { background:linear-gradient(135deg,#fff7eb,#ffead4); }
+    .portal-card.admin { background:linear-gradient(135deg,#eef7ff,#deefff); }
+    .portal-card.officer { background:linear-gradient(135deg,#f8f1ff,#eadef9); }
+    .portal-icon { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:26px; margin:0 auto 7px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+    .public .portal-icon { background:#07852f; } .citizen .portal-icon { background:#ff730b; } .admin .portal-icon { background:#0755ab; } .officer .portal-icon { background:#6425a1; }
+    .portal-card h3 { font-size:clamp(16px,1.35vw,21px); font-weight:800; margin:0 0 5px; }
+    .public h3 { color:#08752c; } .citizen h3 { color:#dc6507; } .admin h3 { color:#074d9d; } .officer h3 { color:#5b2494; }
+    .portal-card p { font-size:12px; line-height:1.5; margin:0; max-width:260px; }
+    .st-key-portal_public button, .st-key-portal_citizen button, .st-key-portal_admin button, .st-key-portal_officer button { width:100% !important; min-height:39px !important; border:0 !important; border-radius:9px !important; color:white !important; font-weight:750 !important; }
+    .st-key-portal_public button { background:#07852f !important; } .st-key-portal_citizen button { background:#f06c0a !important; } .st-key-portal_admin button { background:#0755ab !important; } .st-key-portal_officer button { background:#6425a1 !important; }
 
-    /* Feature strip */
-    .feature-strip {background:rgba(255,255,255,.90); border:1px solid #e5e7df; border-radius:15px; padding:12px 9px 8px; box-shadow:0 3px 14px rgba(22,50,34,.035);}
-    .feature-grid {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));}
-    .feature-item {text-align:center; min-height:82px; padding:7px 3px 0; border-right:1px solid #d9dfd5;}
-    .feature-item:last-child {border-right:0;}
-    .feature-icon {height:49px;width:49px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:23px;margin:0 auto 7px;}
-    .feature-label {color:#18392a;font-size:12px;font-weight:750;line-height:1.35;}
+    /* Eight feature icons */
+    .feature-strip { background:rgba(255,255,255,.92); border:1px solid #e5e7df; border-radius:15px; padding:13px 8px 9px; box-shadow:0 3px 14px rgba(22,50,34,.035); }
+    .feature-grid { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); }
+    .feature-item { text-align:center; min-height:81px; padding:7px 4px 0; border-right:1px solid #d9dfd5; }
+    .feature-item:last-child { border-right:0; }
+    .feature-icon { height:46px; width:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 7px; }
+    .feature-label { color:#18392a; font-size:11px; font-weight:750; line-height:1.4; }
     .f-pink{background:#ffccd0;color:#d33d53}.f-orange{background:#ffebc5;color:#d27a12}.f-green{background:#d6f0d2;color:#22813b}.f-blue{background:#d5ebff;color:#1970bd}.f-lime{background:#d8efc9;color:#34843c}.f-purple{background:#ead8ff;color:#7a42af}.f-cyan{background:#cfeef2;color:#218da0}.f-red{background:#ffd5dd;color:#d62852}
-    .footer-bar {background:#073f2e;color:#fff;border-radius:0 0 12px 12px;padding:16px 20px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-    .footer-name {font-size:15px;font-weight:800;}.footer-sub {font-size:11px;opacity:.85;}.footer-motto{font-weight:700;font-size:15px;text-align:center;}.footer-right{font-size:12px;text-align:right;}
-    .page-info {background:#fff;border:1px solid #dfe8dc;border-radius:15px;padding:22px;margin:14px 0;}
+    .footer-bar { background:#073f2e; color:#fff; border-radius:12px; padding:16px 20px; margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .footer-name { font-size:15px; font-weight:800; } .footer-sub { font-size:11px; opacity:.85; } .footer-motto { font-weight:700; font-size:15px; text-align:center; } .footer-right { font-size:12px; text-align:right; }
+    .page-info { background:#fff; border:1px solid #dfe8dc; border-radius:15px; padding:22px; margin:14px 0; }
 
     @media (max-width: 1050px) {
-        .hero-content {grid-template-columns:17% 53% 30%;padding:20px 12px;}
-        .hero-emblem {width:78%;}
-        .chakra-wrap{width:80px;height:80px;right:-8px;}
-        .portal-card{height:205px;}
-        .portal-card p{font-size:12px;}
+        .hero-grid { grid-template-columns: 15% 57% 28%; padding:20px 12px; gap:3px; }
+        .hero-emblem { height:175px; max-width:88%; }
+        .hero-banner:before { width:29%; }
+        .portal-card { min-height:195px; }
     }
-    @media (max-width: 720px) {
-        .block-container{padding-left:.55rem;padding-right:.55rem;}
-        .site-header{flex-wrap:wrap;gap:8px;}
-        .brand-copy{min-width:180px;}
-        .header-mark{height:58px;width:48px;flex-basis:48px;}
-        .hero-content{grid-template-columns:1fr;min-height:unset;padding:25px 14px;}
-        .hero-banner{min-height:unset;}
-        .azadi-badge{display:none;}
-        .hero-main h1{font-size:31px;}
-        .hero-emblem-box{min-height:130px;}
-        .hero-emblem{width:90px;max-height:120px;}
-        .chakra-wrap{width:62px;height:62px;right:10%;top:0;}
-        .portal-card{height:192px;}
-        .feature-label{font-size:10px;}
-        .feature-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
-        .feature-item:nth-child(4n){border-right:0;}
-        .footer-bar{flex-direction:column;text-align:center;}
-        .footer-right{text-align:center;}
+    @media (max-width: 740px) {
+        .block-container { padding-left:.55rem; padding-right:.55rem; }
+        .hero-grid { grid-template-columns:1fr; padding:21px 12px; gap:10px; }
+        .hero-banner:before { width:100%; height:100%; opacity:.13; clip-path:none; }
+        .azadi-badge { display:none; }
+        .hero-title { font-size:30px; }
+        .hero-subtitle { font-size:18px; }
+        .hero-right { flex-direction:row; flex-wrap:wrap; }
+        .hero-emblem { height:120px; max-width:35%; }
+        .chakra { width:54px; height:54px; font-size:32px; }
+        .feature-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+        .feature-item:nth-child(4n) { border-right:0; }
+        .footer-bar { flex-direction:column; text-align:center; }
+        .footer-right { text-align:center; }
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Session navigation state
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
@@ -272,65 +182,63 @@ if "page" not in st.session_state:
 def go(page_name: str) -> None:
     st.session_state.page = page_name
 
-# Top header: real page buttons with a visual style matching the reference design.
-st.markdown('<div class="header-mini-tricolor"></div>', unsafe_allow_html=True)
-h_logo, h_brand, h_nav, h_lang = st.columns([0.65, 2.25, 4.3, 0.65], vertical_alignment="center")
-with h_logo:
+
+# Header
+st.markdown('<div class="tricolour-line"></div>', unsafe_allow_html=True)
+logo_col, brand_col, nav_col, lang_col = st.columns([0.62, 2.45, 4.2, 0.55])
+with logo_col:
     st.markdown(
-        f'<div style="text-align:center;padding-top:11px"><img class="header-mark" src="{EMBLEM_URL}" alt="ભારતનું રાષ્ટ્રીય ચિહ્ન"></div>',
+        f'<div style="text-align:center;padding-top:10px"><img class="emblem-small" src="{EMBLEM_URL}" alt="ભારતનું રાષ્ટ્રીય ચિહ્ન"></div>',
         unsafe_allow_html=True,
     )
-with h_brand:
+with brand_col:
     st.markdown(
         """
-        <div class="brand-copy" style="padding-top:9px">
-          <div class="guj-brand">કુવાસણા ગ્રામ પંચાયત</div>
-          <div class="eng-brand">Kuvasana Gram Panchayat</div>
-          <div class="tagline">Digital Village | Smart Governance | Better Tomorrow</div>
+        <div class="header-brand">
+          <div class="header-guj">કુવાસણા ગ્રામ પંચાયત</div>
+          <div class="header-eng">Kuvasana Gram Panchayat</div>
+          <div class="header-tag">Digital Village | Smart Governance | Better Tomorrow</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-with h_nav:
+with nav_col:
     nav_cols = st.columns(5, gap="small")
     nav_buttons = [
-        ("⌂  મુખ્ય પેજ", "home", "nav_home"),
-        ("▣  ગામની માહિતી", "village", "nav_village"),
-        ("▧  વિકાસકાર્યો", "development", "nav_development"),
-        ("▤  સમાચાર", "news", "nav_news"),
-        ("☎  સંપર્ક", "contact", "nav_contact"),
+        ("⌂ મુખ્ય પેજ", "home", "nav_home"),
+        ("▣ ગામની માહિતી", "village", "nav_village"),
+        ("▧ વિકાસકાર્યો", "development", "nav_development"),
+        ("▤ સમાચાર", "news", "nav_news"),
+        ("☎ સંપર્ક", "contact", "nav_contact"),
     ]
     for col, (label, page_name, key) in zip(nav_cols, nav_buttons):
         with col:
             st.button(label, key=key, on_click=go, args=(page_name,))
-with h_lang:
-    st.markdown('<div style="text-align:center;font-size:15px;padding-top:10px">🇮🇳<br>ગુજરાતી</div>', unsafe_allow_html=True)
+with lang_col:
+    st.markdown('<div class="language-mark">🇮🇳<br>ગુજરાતી</div>', unsafe_allow_html=True)
 
-# Hero banner: pure HTML/CSS (no inline SVG here, to prevent Markdown showing HTML as code)
+# Hero: each visual element has its own grid area, not layered on top of text.
 st.markdown(
     f"""
     <section class="hero-banner">
-      <div class="saffron-wave"></div>
-      <div class="white-wave"></div>
-      <div class="green-wave"></div>
-      <div class="hero-content">
+      <div class="hero-grid">
         <div class="azadi-badge">
-          <div class="number">75</div>
-          <div class="mini-ribbon">〰️</div>
-          <div class="badge-copy">આઝાદી કા<br>અમૃત મહોત્સવ</div>
+          <div class="azadi-number">75</div>
+          <div class="azadi-ribbon">〰〰</div>
+          <div class="azadi-copy">આઝાદી કા<br>અમૃત મહોત્સવ</div>
         </div>
         <div class="hero-main">
           <div class="hero-eyebrow">🇮🇳 ભારત • ગુજરાત • કુવાસણા 🇮🇳</div>
-          <h1>કુવાસણા <span>ગ્રામ પંચાયત</span></h1>
-          <h2>ડિજિટલ ગ્રામ વિકાસ અને નાગરિક સેવા પોર્ટલ</h2>
+          <div class="hero-title">કુવાસણા <span>ગ્રામ પંચાયત</span></div>
+          <div class="hero-subtitle">ડિજિટલ ગ્રામ વિકાસ અને નાગરિક સેવા પોર્ટલ</div>
           <div class="hero-green-line">🌿 સ્વચ્છ કુવાસણા &nbsp; • &nbsp; 🌱 હરિયાળું કુવાસણા &nbsp; • &nbsp; 🏡 ડિજિટલ કુવાસણા</div>
-          <div class="motto">“સત્યમેવ જયતે”</div>
-          <div class="vande"><span class="orange">Vande</span> <span class="green">Mataram</span> 🇮🇳</div>
+          <div class="hero-motto">“સત્યમેવ જયતે”</div>
+          <div class="hero-vande"><span class="orange">Vande</span> <span class="green">Mataram</span> 🇮🇳</div>
         </div>
-        <div class="hero-emblem-box">
-          <img class="hero-emblem" src="{GOLD_EMBLEM_URL}" alt="અશોક સ્તંભનું રાષ્ટ્રીય ચિહ્ન">
-          <div class="chakra-wrap" aria-label="અશોક ચક્ર">☸</div>
-          <div class="hero-slogan-base">સત્યમેવ જયતે</div>
+        <div class="hero-right">
+          <img class="hero-emblem" src="{EMBLEM_URL}" alt="ભારતનું રાષ્ટ્રીય ચિહ્ન">
+          <div class="chakra">☸</div>
+          <div class="hero-emblem-caption">સત્યમેવ જયતે</div>
         </div>
       </div>
     </section>
@@ -338,7 +246,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Main four portals: cards plus working in-app demo navigation.
+# Four main portals
 st.markdown(
     '<div class="section-heading"><span class="heading-rule"></span>અમારા ચાર મુખ્ય પોર્ટલ<span class="heading-rule"></span></div>',
     unsafe_allow_html=True,
@@ -353,13 +261,7 @@ portals = [
 for col, (slug, icon, title, description, button_label, target) in zip(portal_cols, portals):
     with col:
         st.markdown(
-            f"""
-            <div class="portal-card {slug}">
-              <div class="portal-icon">{icon}</div>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </div>
-            """,
+            f'<div class="portal-card {slug}"><div class="portal-icon">{icon}</div><h3>{title}</h3><p>{description}</p></div>',
             unsafe_allow_html=True,
         )
         st.button(button_label, key=f"portal_{slug}", on_click=go, args=(target,))
@@ -379,17 +281,16 @@ features = [
     ("📊", "Analytics ડેશબોર્ડ", "f-cyan"),
     ("📱", "મોબાઇલ સુવિધા", "f-red"),
 ]
-feature_items_html = "".join(
-    f'<div class="feature-item"><div class="feature-icon {color_class}">{icon}</div>'
-    f'<div class="feature-label">{label}</div></div>'
-    for icon, label, color_class in features
+items_html = "".join(
+    f'<div class="feature-item"><div class="feature-icon {color}">{icon}</div><div class="feature-label">{label}</div></div>'
+    for icon, label, color in features
 )
 st.markdown(
-    f'<div class="feature-strip"><div class="feature-grid">{feature_items_html}</div></div>',
+    f'<div class="feature-strip"><div class="feature-grid">{items_html}</div></div>',
     unsafe_allow_html=True,
 )
 
-# Prototype page content. These are intentionally demo-only; no login/database yet.
+# Prototype navigation targets
 page = st.session_state.page
 page_titles = {
     "public": "🌐 જાહેર માહિતી પોર્ટલ",
@@ -401,39 +302,34 @@ page_titles = {
     "news": "📢 સમાચાર અને સૂચનાઓ",
     "contact": "☎ સંપર્ક માહિતી",
 }
+page_messages = {
+    "public": "અહીં ગામની માહિતી, જાહેર નોટિસ, સમાચાર અને વિકાસકાર્યો બતાવી શકાય છે.",
+    "citizen": "આ ડિઝાઇન પ્રોટોટાઇપ છે. સુરક્ષિત નાગરિક login અને ફરિયાદ નોંધણી હજી બનાવવાની બાકી છે.",
+    "admin": "આ ડિઝાઇન પ્રોટોટાઇપ છે. Admin login, roles અને permission સુરક્ષા હજી બનાવવાની બાકી છે.",
+    "officer": "આ ડિઝાઇન પ્રોટોટાઇપ છે. અધિકારીઓ માટે સુરક્ષિત login અને જવાબદારી આધારિત સુવિધાઓ હજી બનાવવાની બાકી છે.",
+    "village": "અહીં ગામનો પરિચય, જાહેર સુવિધાઓ, ઇતિહાસ અને ઉપયોગી માહિતી ઉમેરવામાં આવશે.",
+    "development": "અહીં મંજૂર વિકાસકાર્યો, હાલની પ્રગતિ અને પૂર્ણ થયેલાં કાર્યોની વિગતો દેખાડવામાં આવશે.",
+    "news": "અહીં ગ્રામ પંચાયતની જાહેર નોટિસો અને સમાચાર દર્શાવવામાં આવશે.",
+    "contact": "અહીં અધિકૃત રીતે મંજૂર સરપંચ, તલાટી-કમ-મંત્રી અને કચેરીના સંપર્ક ઉમેરવામાં આવશે.",
+}
 if page != "home":
     st.markdown('<div class="page-info">', unsafe_allow_html=True)
     st.subheader(page_titles.get(page, "કુવાસણા ગ્રામ પંચાયત"))
-    messages = {
-        "public": "અહીં ગામની માહિતી, જાહેર નોટિસ, સમાચાર અને વિકાસકાર્યો બતાવી શકાય છે.",
-        "citizen": "આ ડિઝાઇન પ્રોટોટાઇપ છે. સુરક્ષિત નાગરિક login અને ફરિયાદ નોંધણી હજી બનાવવાની બાકી છે.",
-        "admin": "આ ડિઝાઇન પ્રોટોટાઇપ છે. Admin login, roles અને permission સુરક્ષા હજી બનાવવાની બાકી છે.",
-        "officer": "આ ડિઝાઇન પ્રોટોટાઇપ છે. અધિકારીઓ માટે સુરક્ષિત login અને જવાબદારી આધારિત સુવિધાઓ હજી બનાવવાની બાકી છે.",
-        "village": "અહીં ગામનો પરિચય, જાહેર સુવિધાઓ, ઇતિહાસ અને ઉપયોગી માહિતી ઉમેરવામાં આવશે.",
-        "development": "અહીં મંજૂર વિકાસકાર્યો, હાલની પ્રગતિ અને પૂર્ણ થયેલાં કાર્યોની વિગતો દેખાડવામાં આવશે.",
-        "news": "અહીં ગ્રામ પંચાયતની જાહેર નોટિસો અને સમાચાર દર્શાવવામાં આવશે.",
-        "contact": "અહીં અધિકૃત રીતે મંજૂર સરપંચ, તલાટી-કમ-મંત્રી અને કચેરીના સંપર્ક ઉમેરવામાં આવશે.",
-    }
-    st.write(messages.get(page, "આ વિભાગ તૈયાર થઈ રહ્યો છે."))
+    st.write(page_messages.get(page, "આ વિભાગ તૈયાર થઈ રહ્યો છે."))
     if page in ("admin", "officer", "citizen"):
         st.warning("હાલમાં અહીં login કાર્યરત નથી. જાહેર ઉપયોગ પહેલાં authentication અને database સુરક્ષા ઉમેરવી જરૂરી છે.")
     st.button("← મુખ્ય પેજ પર પાછા જાઓ", key="back_home", on_click=go, args=("home",))
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Footer matching the reference image.
+# Footer
 st.markdown(
     """
     <div class="footer-bar">
-      <div>
-        <div class="footer-name">🏛️ કુવાસણા ગ્રામ પંચાયત</div>
-        <div class="footer-sub">Kuvasana Gram Panchayat</div>
-      </div>
+      <div><div class="footer-name">🏛️ કુવાસણા ગ્રામ પંચાયત</div><div class="footer-sub">Kuvasana Gram Panchayat</div></div>
       <div class="footer-motto">સત્યમેવ જયતે &nbsp; | &nbsp; વંદે માતરમ્</div>
       <div class="footer-right">ડિજિટલ ગામ &nbsp; | &nbsp; સમૃદ્ધ ભારત 🇮🇳</div>
     </div>
-    <div style="text-align:center;color:#788278;font-size:10px;padding:7px 4px">
-      પ્રોટોટાઇપ ડિઝાઇન — આ સત્તાવાર સરકારી વેબસાઇટ નથી.
-    </div>
+    <div style="text-align:center;color:#788278;font-size:10px;padding:7px 4px">પ્રોટોટાઇપ ડિઝાઇન — આ સત્તાવાર સરકારી વેબસાઇટ નથી.</div>
     """,
     unsafe_allow_html=True,
 )
